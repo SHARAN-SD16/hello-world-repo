@@ -1,34 +1,25 @@
-
-name: CI Pipeline
+name: Matrix Configuration
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
-  build:
+  deploy-on-ubuntu:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Echo Docker Details
+        run: docker info
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Run Image
+        run: docker run hello-world
 
-      - name: Install dependencies
-        run: npm install
+  deploy-on-windows:
+    runs-on: windows-latest
 
-      - name: Run tests
-        run: npm test
+    steps:
+      - name: Echo Docker Details
+        run: docker info
 
-      - name: Build application
-        run: npm run build
-      - name: multiple commands
-        run: |
-          echo"build"
-          pwd
-          ls
+      - name: Run Image
+        run: docker run hello-world
