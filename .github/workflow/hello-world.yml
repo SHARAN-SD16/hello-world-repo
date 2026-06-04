@@ -1,11 +1,29 @@
-name: Hello World
-'on': push
-jobs:
-  hello-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo text
-        run: 'echo "Hello, world!"'
-      
 
-    
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build application
+        run: npm run build
